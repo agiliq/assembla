@@ -9,6 +9,7 @@ An easy to use wrapper around the Assembla API.
  - `Examples for Milestones`_
  - `Examples for Users`_
  - `Examples for Tickets`_
+ - `Examples for Tasks`_
  - `Model Reference`_
  - `Caching`_
 
@@ -104,6 +105,25 @@ Examples for Tickets
 		priority=1,
 		status_name='Test'
 		)
+
+Example for Tasks
+-----------------
+::
+
+	# Retrieve tasks for a user
+	api = API(auth, use_cache=False)
+	tasks = api.tasks()
+	spaces = api.spaces()
+
+	# Retrieve the total hours, for which an
+	# individual has worked in a space!
+	for space in spaces:
+	    total_hours = 0
+	    print space.name
+	    for task in tasks:
+		if task.space_id == space.id:
+	            total_hours += task.hours		
+	    print total_hours
 
 Model Reference
 ---------------
