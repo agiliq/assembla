@@ -10,6 +10,7 @@ An easy to use wrapper around the Assembla API.
  - `Examples for Users`_
  - `Examples for Tickets`_
  - `Examples for Tasks`_
+ - `Examples for Stream`_  
  - `Model Reference`_
  - `Caching`_
 
@@ -110,7 +111,7 @@ Example for Tasks
 -----------------
 ::
 
-	# Retrieve tasks for a user
+	# Retrieve tasks for a user.
 	api = API(auth, use_cache=False)
 	tasks = api.tasks()
 	spaces = api.spaces()
@@ -125,6 +126,42 @@ Example for Tasks
 	            total_hours += task.hours		
 	    print total_hours
 
+Example for Stream
+------------------
+::
+
+	# Retrieve the events.
+
+	from datetime import datetime, date, timedelta
+
+	api = API(auth, use_cache=False)
+	events = api.events()
+	spaces = api.spaces()
+
+	# Retrieve the events happened in all spaces for an Organization, for a day.
+
+	this_day = (datetime.now() - timedelta(hours=120)).date()
+	print 'Agiliq-Assembla Summary for the day ', this_day.strftime("%b %d %Y")
+
+	for event in events:
+	    event_date_time = datetime.strptime(event.date, '%a %b %d %H:%M:%S +0000 %Y')
+	    event_date = event_date_time.date()
+	    if not event_date > this_day:
+	        break
+	    for space in spaces:
+	        for user in space.users():
+	            if user.id == event.author['id'] and event.space['id'] == space.id:
+	                print '\n', event_date_time.strftime("%H:%S"), \
+		        event.author['name'], '@', space.name, event.operation, \
+	                '\n', event.title, '\n', event.url, '\n'
+	                if event.object == 'Ticket' and event.operation != 'created':
+			    if getattr(event, 'whatchanged', None):
+	                        print event.whatchanged
+		            elif getattr(event, 'comment_or_description', None):
+			        print event.comment_or_description
+
+	#You can use send_mail to send a summary email for a day.
+		  
 Model Reference
 ---------------
 All models (Space, Milestone, User and Ticket) are returned with fields corresponding
