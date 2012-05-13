@@ -10,7 +10,7 @@ An easy to use wrapper around the Assembla API.
  - `Examples for Users`_
  - `Examples for Tickets`_
  - `Examples for Tasks`_
- - `Examples for Stream`__  
+ - `Examples for Stream`_  
  - `Model Reference`_
  - `Caching`_
 
@@ -130,7 +130,8 @@ Example for Stream
 ------------------
 ::
 
-	# Retrieve the events.
+	# Retrieve the Stream Events.
+	# These are similar to those appearing on http://www.assembla.com/start (right side)
 
 	from datetime import datetime, date, timedelta
 
@@ -186,4 +187,5 @@ If you want to purge stale data from a space's cache and begin refilling it::
 	space.cache.purge()
 
 Original Source: https://github.com/markfinger/assembla
+
 Tasks API, Stream API, added in this Source: https://github.com/arjunc77/assembla
