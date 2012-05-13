@@ -10,7 +10,7 @@ An easy to use wrapper around the Assembla API.
  - `Examples for Users`_
  - `Examples for Tickets`_
  - `Examples for Tasks`_
- - `Examples for Stream`_  
+ - `Examples for Stream`__  
  - `Model Reference`_
  - `Caching`_
 
@@ -140,7 +140,7 @@ Example for Stream
 
 	# Retrieve the events happened in all spaces for an Organization, for a day.
 
-	this_day = (datetime.now() - timedelta(hours=120)).date()
+	this_day = (datetime.now() - timedelta(hours=24)).date()
 	print 'Agiliq-Assembla Summary for the day ', this_day.strftime("%b %d %Y")
 
 	for event in events:
@@ -185,4 +185,5 @@ If you want to purge stale data from a space's cache and begin refilling it::
 	# Purge stale data from the space's cache, any subsequent request will update the cache
 	space.cache.purge()
 
-Source: https://github.com/markfinger/assembla
+Original Source: https://github.com/markfinger/assembla
+Tasks API, Stream API, added in this Source: https://github.com/arjunc77/assembla
