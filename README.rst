@@ -147,7 +147,7 @@ Example for Stream
 	tday = datetime.now()
 	tday = tday.replace(tzinfo=local_zone)
 	this_day = (tday - timedelta(hours=24)).date()
-	print 'Agiliq-Assembla Summary for the day ', this_day.strftime("%b %d %Y")
+	print 'Agiliq-Assembla Summary for the day ', tday.strftime("%b %d %Y")
 
 	for event in events:
 	    event_date_time = parse(event.date)
