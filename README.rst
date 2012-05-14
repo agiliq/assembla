@@ -134,18 +134,24 @@ Example for Stream
 	# These are similar to those appearing on http://www.assembla.com/start (right side)
 
 	from datetime import datetime, date, timedelta
+	from dateutil import tz
+	from dateutil.parser import parse
 
 	api = API(auth, use_cache=False)
 	events = api.events()
 	spaces = api.spaces()
+	local_zone = tz.tzlocal()
 
 	# Retrieve the events happened in all spaces for an Organization, for a day.
 
-	this_day = (datetime.now() - timedelta(hours=24)).date()
+	tday = datetime.now()
+	tday = tday.replace(tzinfo=local_zone)
+	this_day = (tday - timedelta(hours=24)).date()
 	print 'Agiliq-Assembla Summary for the day ', this_day.strftime("%b %d %Y")
 
 	for event in events:
-	    event_date_time = datetime.strptime(event.date, '%a %b %d %H:%M:%S +0000 %Y')
+	    event_date_time = parse(event.date)
+	    event_date_time = event_date_time.replace(tzinfo=local_zone)
 	    event_date = event_date_time.date()
 	    if not event_date > this_day:
 	        break
@@ -161,7 +167,7 @@ Example for Stream
 		            elif getattr(event, 'comment_or_description', None):
 			        print event.comment_or_description
 
-	#You can use send_mail to send a summary email for a day.
+	#You can use smtplib module to send a summary email for a day.
 		  
 Model Reference
 ---------------
