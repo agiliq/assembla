@@ -151,14 +151,14 @@ Example for Stream
 
 	for event in events:
 	    event_date_time = parse(event.date)
-	    event_date_time = event_date_time.replace(tzinfo=local_zone)
+	    event_date_time = event_date_time.astimezone(local_zone)
 	    event_date = event_date_time.date()
 	    if not event_date > this_day:
 	        break
 	    for space in spaces:
 	        for user in space.users():
 	            if user.id == event.author['id'] and event.space['id'] == space.id:
-	                print '\n', event_date_time.strftime("%H:%S"), \
+	                print '\n', event_date_time.strftime("%H:%M"), \
 		        event.author['name'], '@', space.name, event.operation, \
 	                '\n', event.title, '\n', event.url, '\n'
 	                if event.object == 'Ticket' and event.operation != 'created':
