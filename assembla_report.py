@@ -6,6 +6,8 @@ from datetime import datetime, timedelta
 from dateutil import tz
 from dateutil.parser import parse
 
+#run this code once at the end of day, or setup a crontab.
+
 
 def main():
     s = sendgrid.Sendgrid(sendgrid_auth[0], sendgrid_auth[1], secure=True)
@@ -55,7 +57,7 @@ def main():
                             plain_body += "<font color='violet'>" + event.comment_or_description + "</font><br/>"
 
     message = sendgrid.Message("ramana@agiliq.com", subject, "", "<div>" + plain_body + "</div>")
-    message.add_to("ramana@agiliq.com", "Agilq Team")
+    message.add_to("team@agiliq.com", "Agilq Team")
     s.smtp.send(message)
 
 
